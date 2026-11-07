@@ -1,0 +1,45 @@
+name: MyTokens
+options:
+  minimumXcodeGenVersion: 2.38.0
+  deploymentTarget: { iOS: "17.0" }
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    GENERATE_INFOPLIST_FILE: YES
+    CODE_SIGN_STYLE: Automatic
+targets:
+  MyTokens:
+    type: application
+    platform: iOS
+    sources: [App, Shared]
+    dependencies:
+      - target: MyTokensWidgetExtension
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.mytokens
+        CODE_SIGN_ENTITLEMENTS: App/MyTokens.entitlements
+        INFOPLIST_KEY_CFBundleDisplayName: MyTokens
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleURLTypes:
+          - CFBundleURLName: com.example.mytokens
+            CFBundleURLSchemes: [mytokens]
+  MyTokensWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources: [Widget, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.mytokens.widget
+        CODE_SIGN_ENTITLEMENTS: Widget/MyTokens.entitlements
+        SKIP_INSTALL: YES
+    info:
+      path: Widget/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
